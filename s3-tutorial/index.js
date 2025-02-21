@@ -1,11 +1,12 @@
 const { GetObjectCommand, S3Client, PutObjectCommand, ListObjectsV2Command, DeleteObjectCommand } = require('@aws-sdk/client-s3')
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+require('dotenv').config();
 
 const s3Client = new S3Client({
     region: 'ap-south-1',
     credentials: {
-        accessKeyId: "AKIARJBZGBOAHJYNTOWZ",
-        secretAccessKey: "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",
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
 });
 
@@ -49,9 +50,11 @@ async function deleteObject(){
 async function init(){
     // console.log('URL for monke.jpg', await getObjectURL("monke.jpg"));
     // console.log('URL for monke.jpg', await getObjectURL("/uploads/user-uploads/image-1740047346683.jpg"));
-    console.log('URL for uploading', await putObject(`image-${Date.now()}.jpg`, 'image/jpg'))
-    // listObjects()
+    // console.log('URL for uploading', await putObject(`image-${Date.now()}.jpg`, 'image/jpg'))
+    listObjects()
     // deleteObject();
 }
+// console.log("AWS_ACCESS_KEY_ID:", process.env.AWS_ACCESS_KEY_ID); // Debugging line
+// console.log("AWS_SECRET_ACCESS_KEY:", process.env.AWS_SECRET_ACCESS_KEY); // Debugging line
 
 init();
